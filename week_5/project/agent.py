@@ -265,6 +265,25 @@ class Agent:
 
             agents_rules = ""
 
+        skill_text = "\n\nAvailable Skills:\n"
+
+        if not self.skills:
+
+            skill_text += (
+                "None\n"
+            )
+
+        else:
+
+            for skill in self.skills:
+
+                skill_text += (
+                    f"- {skill['name']}: "
+                    f"{skill['description']}\n"
+                )
+
+        agents_rules += skill_text
+
         self.messages = [
             {
                 "role": "system",
