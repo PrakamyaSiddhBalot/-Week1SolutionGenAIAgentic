@@ -28,6 +28,12 @@ from tools.exec import TOOLS as COMMAND_TOOLS
 from tools.search import TOOLS as SEARCH_TOOLS
 from tools.plan import TOOLS as TODO_TOOLS
 from skills.loader import load_all_skills
+from tools.skills import (
+    load_skill
+)
+from tools.skills import (
+    TOOLS as SKILL_TOOLS
+)
 
 load_dotenv()
 
@@ -213,7 +219,7 @@ TOOLS = [
             }
         }
     }
-] + COMMAND_TOOLS + SEARCH_TOOLS + TODO_TOOLS
+] + COMMAND_TOOLS + SEARCH_TOOLS + TODO_TOOLS + SKILL_TOOLS
 
 class Agent:
 
@@ -244,6 +250,7 @@ class Agent:
             "add_todos": add_todos,
             "get_todos": get_todos,
             "mark_todo": mark_todo,
+            "load_skill": load_skill,
         }
 
         self.load_agents_md()
