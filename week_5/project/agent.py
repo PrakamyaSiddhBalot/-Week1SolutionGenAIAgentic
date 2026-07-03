@@ -27,6 +27,7 @@ from tools.plan import (
 from tools.exec import TOOLS as COMMAND_TOOLS
 from tools.search import TOOLS as SEARCH_TOOLS
 from tools.plan import TOOLS as TODO_TOOLS
+from skills.loader import load_all_skills
 
 load_dotenv()
 
@@ -224,6 +225,7 @@ class Agent:
         )
 
         self.messages = []
+        self.skills = load_all_skills()
 
         self.tools = {
             "web_search": web_search,
