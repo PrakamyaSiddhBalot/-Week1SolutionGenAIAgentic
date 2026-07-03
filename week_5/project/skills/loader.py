@@ -131,3 +131,42 @@ def load_all_skills():
             skills.append(skill)
 
     return skills
+
+def load_skill(name):
+    """
+    Load the full contents of a skill.
+
+    Returns:
+        {
+            "content": ...,
+            "resources": [...]
+        }
+
+    or
+
+        {
+            "error": ...
+        }
+    """
+
+    for skill in load_all_skills():
+
+        if skill["name"] != name:
+            continue
+
+        with open(
+            skill["skill_file"],
+            "r",
+            encoding="utf-8"
+        ) as f:
+
+            content = f.read()
+
+        return {
+            "content": content,
+            "resources": skill["resources"]
+        }
+
+    return {
+        "error": f"Skill '{name}' not found."
+    }
