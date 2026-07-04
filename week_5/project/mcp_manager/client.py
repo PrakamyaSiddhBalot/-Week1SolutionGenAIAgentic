@@ -156,8 +156,10 @@ class MCPClient:
             tool_name,
             arguments
         )
-
-        return result
+        
+        return {
+            "content": str(result.content)
+        }
 
     async def cleanup(self):
 
