@@ -2,6 +2,9 @@ import os
 import json
 import uuid
 import argparse
+import asyncio
+
+from mcp_manager.client import MCPClient
 
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -232,6 +235,13 @@ class Agent:
 
         self.messages = []
         self.skills = load_all_skills()
+        self.mcp = MCPClient()
+
+        asyncio.run(
+            self.mcp.connect(
+                "github"
+            )
+        )
 
         self.tools = {
             "web_search": web_search,
@@ -567,6 +577,17 @@ class Agent:
         self.save_session()
 
         return answer
+    def __del__(self):
+
+        try:
+    
+            asyncio.run(
+                self.mcp.cleanup()
+            )
+    
+        except Exception:
+    
+            pass
 
 
 class REPLAgent(Agent):
