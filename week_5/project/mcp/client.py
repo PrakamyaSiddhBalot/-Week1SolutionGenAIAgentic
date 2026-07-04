@@ -1,4 +1,22 @@
+import os
+from typing import Optional
+from contextlib import AsyncExitStack
+
+from dotenv import load_dotenv
+
+from mcp import (
+    ClientSession,
+    StdioServerParameters
+)
+
+from mcp.client.stdio import (
+    stdio_client
+)
+
 from mcp.loader import load_mcp_config
+
+
+load_dotenv()
 
 
 class MCPClient:
@@ -7,28 +25,73 @@ class MCPClient:
 
         self.config = load_mcp_config()
 
-        self.servers = {}
+        self.session: Optional[
+            ClientSession
+        ] = None
+
+        self.exit_stack = (
+            AsyncExitStack()
+        )
 
         self.tools = {}
+    def create_server_parameters(
+        self,
+        server_name
+    ):
 
-    def connect(self):
-
-        raise NotImplementedError
-
-    def list_servers(self):
-
-        return list(
-            self.servers.keys()
+        servers = (
+            self.config.get(
+                "mcpServers",
+                {}
+            )
         )
 
-    def list_tools(self):
+        if server_name not in servers:
 
-        return list(
-            self.tools.keys()
-        )
-    def get_server_configs(self):
-    
-         return self.config.get(
-            "mcpServers",
-            {}
+            raise ValueError(
+                f"Unknown MCP server: {server_name}"
+            )
+
+        server = servers[
+            server_name
+        ]
+
+        env = {}
+
+        for key, value in server[
+            "env"
+        ].items():
+
+            if (
+                value.startswith("${")
+                and value.endswith("}")
+            ):
+
+                variable = value[2:-1]
+
+                env[key] = (
+                    os.environ.get(
+                        variable,
+                        ""
+                    )
+                )
+
+            else:
+
+                env[key] = value
+
+        command = server[
+            "command"
+        ]
+
+        if command == "npx":
+
+            command = "npx.cmd"
+
+        return (
+            StdioServerParameters(
+                command=command,
+                args=server["args"],
+                env=env
+            )
         )
