@@ -8,6 +8,8 @@ from openai import OpenAI
 
 from tools.web import web_search, web_fetch
 from tools.papers import paper_search, read_paper
+from tools.mcp import mcp_call
+from tools.mcp import TOOLS as MCP_TOOLS
 
 from tools.files import (
     read_file,
@@ -219,7 +221,7 @@ TOOLS = [
             }
         }
     }
-] + COMMAND_TOOLS + SEARCH_TOOLS + TODO_TOOLS + SKILL_TOOLS
+] + COMMAND_TOOLS + SEARCH_TOOLS + TODO_TOOLS + SKILL_TOOLS + MCP_TOOLS
 
 class Agent:
 
@@ -251,6 +253,7 @@ class Agent:
             "get_todos": get_todos,
             "mark_todo": mark_todo,
             "load_skill": load_skill,
+            "mcp_call": mcp_call,
         }
 
         self.load_agents_md()
