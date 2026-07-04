@@ -641,10 +641,10 @@ def main():
         session_id=args.session
     )
     asyncio.run(
-        self.mcp.connect(
-            "github"
-        )
+        agent.mcp.connect("github")
     )
+    
+    agent.run()
 
     if args.question:
         agent.run_once(
