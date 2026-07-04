@@ -5,6 +5,7 @@ import argparse
 
 from dotenv import load_dotenv
 from openai import OpenAI
+from mcp_manager.loader import load_mcp_config
 
 from tools.web import web_search, web_fetch
 from tools.papers import paper_search, read_paper
@@ -632,7 +633,9 @@ class REPLAgent(Agent):
                 print("\nConfigured MCP Servers")
                 print("----------------------")
             
-                servers = self.mcp.config.get(
+                config = load_mcp_config()
+
+                servers = config.get(
                     "mcpServers",
                     {}
                 )
