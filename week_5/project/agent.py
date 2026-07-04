@@ -644,8 +644,6 @@ def main():
         agent.mcp.connect("github")
     )
     
-    agent.run()
-
     if args.question:
         agent.run_once(
             args.question
