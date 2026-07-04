@@ -1,55 +1,25 @@
 import asyncio
-import json
-import os
-from dotenv import load_dotenv
-load_dotenv()
 
-from mcp import (
-    ClientSession,
-    StdioServerParameters
-)
+from mcp_manager.client import MCPClient
 
-from mcp.client.stdio import (
-    stdio_client
-)
-with open(
-    "config.json",
-    "r",
-    encoding="utf-8"
-) as f:
 
-    config = json.load(f)
+async def main():
 
-github = config["mcpServers"]["github"]
+    client = MCPClient()
 
-env = {}
+    try:
 
-for key, value in github["env"].items():
+        print("Connecting to GitHub MCP server...")
 
-    if (
-        value.startswith("${")
-        and value.endswith("}")
-    ):
+        await client.connect("github")
 
-        variable = value[2:-1]
+        print("Connection successful!")
 
-        env[key] = os.environ.get(
-            variable,
-            ""
-        )
+    finally:
 
-    else:
+        await client.cleanup()
 
-        env[key] = value
 
-server = StdioServerParameters(
+if __name__ == "__main__":
 
-    command="npx.cmd",
-
-    args=github["args"],
-
-    env=env
-
-)
-
-print(server)
+    asyncio.run(main())
