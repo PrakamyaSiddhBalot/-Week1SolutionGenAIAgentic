@@ -588,6 +588,84 @@ class REPLAgent(Agent):
 
             if user_input.strip() == "/quit":
                 break
+            if user_input.strip() == "/help":
+
+                print(
+            """
+            Research Desk Commands
+            ======================
+            
+            /help
+                Show this help message.
+            
+            /status
+                Show the current status of the agent.
+            
+            /quit
+                Exit the agent.
+            """
+                )
+            
+                continue
+            if user_input.strip() == "/status":
+
+                print()
+            
+                print("=" * 40)
+                print("Research Desk Status")
+                print("=" * 40)
+            
+                print("\nSkills")
+                print("------")
+            
+                for skill in self.skills:
+            
+                    print(f"✓ {skill['name']}")
+            
+                    description = skill.get(
+                        "description",
+                        "No description."
+                    )
+            
+                    print(f"    {description}")
+            
+                print("\nConfigured MCP Servers")
+                print("----------------------")
+            
+                servers = self.mcp.config.get(
+                    "mcpServers",
+                    {}
+                )
+            
+                if not servers:
+            
+                    print("None")
+            
+                else:
+            
+                    for server in servers:
+            
+                        print(f"✓ {server}")
+            
+                print("\nCapabilities")
+                print("------------")
+            
+                capabilities = [
+                    "Web Search",
+                    "Paper Search",
+                    "File Operations",
+                    "Command Execution",
+                    "Skills",
+                    "MCP"
+                ]
+            
+                for capability in capabilities:
+            
+                    print(f"✓ {capability}")
+            
+                print()
+            
+                continue
 
             answer = self.chat(
                 user_input
