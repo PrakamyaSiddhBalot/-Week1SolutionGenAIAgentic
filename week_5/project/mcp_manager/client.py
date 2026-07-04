@@ -134,6 +134,8 @@ class MCPClient:
         print(
             f"Connected to {server_name} MCP server."
         )
+# Debug output intentionally left enabled to demonstrate
+# MCP connection and dynamic tool discovery for Week 5 testing.
     async def call_tool(
         self,
         tool_name,
