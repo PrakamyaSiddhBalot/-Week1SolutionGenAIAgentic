@@ -237,12 +237,6 @@ class Agent:
         self.skills = load_all_skills()
         self.mcp = MCPClient()
 
-        asyncio.run(
-            self.mcp.connect(
-                "github"
-            )
-        )
-
         self.tools = {
             "web_search": web_search,
             "web_fetch": web_fetch,
@@ -645,6 +639,11 @@ def main():
 
     agent = REPLAgent(
         session_id=args.session
+    )
+    asyncio.run(
+        self.mcp.connect(
+            "github"
+        )
     )
 
     if args.question:
