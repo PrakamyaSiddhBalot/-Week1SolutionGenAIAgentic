@@ -577,17 +577,6 @@ class Agent:
         self.save_session()
 
         return answer
-    def __del__(self):
-
-        try:
-    
-            asyncio.run(
-                self.mcp.cleanup()
-            )
-    
-        except Exception:
-    
-            pass
 
 
 class REPLAgent(Agent):
