@@ -112,7 +112,25 @@ class MCPClient:
         )
 
         await self.session.initialize()
+        response = await self.session.list_tools()
 
+        self.tools = {}
+        
+        for tool in response.tools:
+        
+            self.tools[tool.name] = tool
+        
+        print(
+            "Available tools:"
+        )
+        
+        for tool_name in self.tools:
+        
+            print(
+                "-",
+                tool_name
+            )
+        
         print(
             f"Connected to {server_name} MCP server."
         )
