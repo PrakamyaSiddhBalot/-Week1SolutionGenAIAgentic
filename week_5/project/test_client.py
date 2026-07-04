@@ -12,6 +12,18 @@ async def main():
         print("Connecting to GitHub MCP server...")
 
         await client.connect("github")
+        print()
+
+        print("Calling search_repositories...")
+        
+        result = await client.call_tool(
+            "search_repositories",
+            {
+                "query": "python-sdk"
+            }
+        )
+        
+        print(result)
 
         print("Connection successful!")
 
