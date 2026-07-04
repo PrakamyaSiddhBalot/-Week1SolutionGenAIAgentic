@@ -134,6 +134,30 @@ class MCPClient:
         print(
             f"Connected to {server_name} MCP server."
         )
+    async def call_tool(
+        self,
+        tool_name,
+        arguments
+    ):
+
+        if self.session is None:
+
+            raise RuntimeError(
+                "MCP client is not connected."
+            )
+
+        if tool_name not in self.tools:
+
+            raise ValueError(
+                f"Unknown MCP tool: {tool_name}"
+            )
+
+        result = await self.session.call_tool(
+            tool_name,
+            arguments
+        )
+
+        return result
 
     async def cleanup(self):
 
