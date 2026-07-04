@@ -26,3 +26,9 @@ class MCPClient:
         return list(
             self.tools.keys()
         )
+    def get_server_configs(self):
+    
+         return self.config.get(
+            "mcpServers",
+            {}
+        )
